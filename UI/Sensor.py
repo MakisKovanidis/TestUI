@@ -15,5 +15,5 @@ class Sensor:
     def update(self):
         randValue = random.randrange(-25, 20)
         self.value = randValue
-        print(randValue)
+        #print(randValue)
         return self.value

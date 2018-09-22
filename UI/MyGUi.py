@@ -20,16 +20,15 @@ for i in range(len(sensorList)):
 
 
 
-# def readSensor():
-#     mainWindow.after(1000, readSensor)
-#     global temperature1
-#     global temperature2
-#     global temperature3
-#
-#     temperature1.set(sensorList[0].update())
-#     temperature2.set(sensorList[1].update())
-#     temperature3.set(sensorList[2].update())
-#
-#
-# mainWindow.after(1000, readSensor)
+def readSensor():
+    mainWindow.after(10000, readSensor)
+    global labelFrameList
+    global sensorList
+
+    for j in range (len(sensorList)):
+        vall= sensorList[j].update()
+        print(vall)
+
+
+mainWindow.after(1000, readSensor)
 mainWindow.mainloop()
