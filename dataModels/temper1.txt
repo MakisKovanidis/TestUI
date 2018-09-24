@@ -1,0 +1,2 @@
+8d 01 4b 46 7f ff 0c 10 1b : crc=1b YES
+8d 01 4b 46 7f ff 0c 10 1b t=24812
