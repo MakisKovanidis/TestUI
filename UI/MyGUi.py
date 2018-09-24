@@ -1,6 +1,6 @@
 import os
 from tkinter import *
-
+from Settings import globalSettings
 from UI.MyLabelFrame import MyLabelFrame
 from UI.Sensor import Sensor
 
@@ -9,7 +9,7 @@ labelFrameList = []
 mainWindow = Tk()
 
 # Open a file
-path = "c:/test/"
+path = globalSettings.baseDir
 dirs = os.listdir(path)
 counter = 1
 # This would print all the files and directories
@@ -37,6 +37,6 @@ def read_sensor():
         labelFrameList[j].updateLabelTextValue(vall)
         print(vall)
 
-
+mainWindow.state('zoomed')
 mainWindow.after(1000, read_sensor)
 mainWindow.mainloop()

@@ -37,6 +37,7 @@ class Sensor:
         if equals_pos != -1:
             temp_string = lines[1][equals_pos + 2:]
             self.value = float(temp_string) / 1000.0
-            return self.value
+        return "{:.2f}".format(self.value)
+
     def getName(self):
         return self.name
