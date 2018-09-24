@@ -1,3 +1,4 @@
+import os
 from tkinter import *
 
 from UI.MyLabelFrame import MyLabelFrame
@@ -7,28 +8,35 @@ sensorList = []
 labelFrameList = []
 mainWindow = Tk()
 
-sensorList.append(Sensor(1, "Sensor1", 20.0, -10, 30))
-sensorList.append(Sensor(2, "Sensor2", 30.0, -10, 30))
-sensorList.append(Sensor(3, "Sensor3", 20.0, -10, 30))
+# Open a file
+path = "c:/test/"
+dirs = os.listdir(path)
+counter = 1
+# This would print all the files and directories
+
+for file in dirs:
+    sensorName = "Sensor" + str(counter)
+    deviceFile = path + file
+    sensorList.append(Sensor(counter, sensorName, 20.0, -10, 30, deviceFile))
+    counter = counter + 1
+    print(deviceFile)
 
 for i in range(len(sensorList)):
     labelText = StringVar()
-    labelText.set("Sensor"+str(i))
+    labelText.set(sensorList[i].getName())
     labelFrameList.append(MyLabelFrame(mainWindow, labelText.get()))
 
 
-
-
-
-def readSensor():
-    mainWindow.after(10000, readSensor)
+def read_sensor():
+    mainWindow.after(10000, read_sensor)
     global labelFrameList
     global sensorList
 
-    for j in range (len(sensorList)):
-        vall= sensorList[j].update()
+    for j in range(len(sensorList)):
+        vall = sensorList[j].read_temp()
+        labelFrameList[j].updateLabelTextValue(vall)
         print(vall)
 
 
-mainWindow.after(1000, readSensor)
+mainWindow.after(1000, read_sensor)
 mainWindow.mainloop()
