@@ -3,7 +3,7 @@ from tkinter import *
 
 class MyLabelFrame:
     def __init__(self, master=None, label='MyFrame'):
-        self.frame = LabelFrame(master, text=label, width= 2000 )
+        self.frame = LabelFrame(master, text=label)
         self.frame.pack()
         self.value = StringVar()
         self.value.set("20.0")
