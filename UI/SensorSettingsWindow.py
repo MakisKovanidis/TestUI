@@ -1,10 +1,11 @@
 from tkinter import *
-from UI.Sensor import Sensor
+from tkinter import messagebox
 
 
 class SensorsSettingsWindow(Toplevel):
     def __init__(self, par2):
         self.topWindow = Toplevel()
+        self.topWindow.transient()
         self.topWindow.wm_title("hello1")
         self.listFrame = LabelFrame(self.topWindow, text="Λιστα Αισθητηρων")
         self.sensorList = Listbox(self.listFrame, selectmode=EXTENDED, width=40)
@@ -48,13 +49,18 @@ class SensorsSettingsWindow(Toplevel):
         self.upperLimitEntry = Entry(self.frame, width=50, textvariable=stringUpperEntry)
         self.upperLimitEntry.grid(row=5, column=0, sticky=W)
 
-        self.okButton = Button(self.frame, text="Aποθήκευση")
-        self.okButton.grid(row=6, column=0, sticky=E, pady=10, padx=10)
+        self.okButton = Button(self.frame, text="Aποθήκευση", width=10)
+        self.okButton.grid(row=6, column=0, pady=10, padx=10)
+
+        self.exitButton = Button(self.frame, text="Εξοδος", width=10, command=lambda: self.exitWithoutSaving())
+        self.exitButton.grid(row=6, column=0, sticky=E, pady=10, padx=10)
 
     def get_element(self, event, arg):
         lb = event.widget
         idx = lb.curselection()
-        # item = lb.get(idx)
-        # print(str(idx))
-        # value = self.sensorList.curselection()
         print(self.sensorList.get(idx))
+
+    def exitWithoutSaving(self):
+        result = messagebox.askokcancel("Close", "Exit without saving")
+        if (result == "ok") :
+            self.topWindow.destroy()

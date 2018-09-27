@@ -10,7 +10,7 @@ def read_temp_raw(filePath):
 
 
 class Sensor:
-    def __init__(self, id, name, value, upperLimit, lowLimit, filePath="SS"):
+    def __init__(self, id, name, value, lowLimit, upperLimit, filePath="SS"):
         self.id = id
         self.name = name
         self.value = value
@@ -18,9 +18,6 @@ class Sensor:
         self.lowLimit = lowLimit
         self.filePath = filePath
 
-    # def setLimits(self, newUpperLimit, newLowLimit):
-    #     self.upperLimit = newUpperLimit
-    #     self.lowLimit = newLowLimit
 
     def update(self):
         randValue = random.randrange(-25, 20)
