@@ -1,1 +1,1 @@
-baseDir = "c:/test/"
+baseDir = "D:/pythonProjects/TestUI/dataModels/"

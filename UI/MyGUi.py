@@ -38,7 +38,8 @@ class MainWindow(Tk):
         for i in range(len(sensorList)):
             labelText = StringVar()
             labelText.set(sensorList[i].getName())
-            labelFrameList.append(MyLabelFrame(self, labelText.get()))
+            labelFrameList.append(MyLabelFrame(sensorList[i], self, labelText.get()))
+
 
     # Read the sensor periodically after 10 secs
     def read_sensor(self):
