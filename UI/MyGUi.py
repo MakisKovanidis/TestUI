@@ -22,8 +22,8 @@ class MainWindow(Tk):
         menu.add_cascade(label="File", menu=subMenu)
         subMenu.add_command(label="Settings",
                             command=lambda: self.create_window())
-        # subMenu.add_command(label="SecondFrame",
-        #                     command=lambda: self.create_window2())
+        subMenu.add_command(label="Exit",
+                             command=lambda: self.create_window2())
 
         # Read the number of files which represent the number odf sensor
         for file in dirs:
@@ -55,6 +55,10 @@ class MainWindow(Tk):
     def create_window(self):
         global sensorList
         SensorsSettingsWindow(sensorList)
+
+    def saveSensorList(self):
+        global sensorList
+
 
 
 root = MainWindow()
