@@ -2,7 +2,7 @@ import os
 from tkinter import *
 from Settings import globalSettings
 from UI.MyLabelFrame import MyLabelFrame
-from UI.Sensor import Sensor
+from Models.Sensor import Sensor
 from UI.SensorSettingsWindow import SensorsSettingsWindow
 
 sensorList = []
