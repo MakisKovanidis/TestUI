@@ -1,15 +1,20 @@
 import os
 from tkinter import *
+from tkinter import messagebox
+
 from Settings import globalSettings
 from UI.MyLabelFrame import MyLabelFrame
 from Models.Sensor import Sensor
 from UI.SensorSettingsWindow import SensorsSettingsWindow
+import _pickle as pickle
 
+sensorListImportedFromFile = []
 sensorList = []
 labelFrameList = []
 
 # Open a file
 path = globalSettings.baseDir
+pathData = globalSettings.dataDir
 dirs = os.listdir(path)
 counter = 1
 
@@ -23,7 +28,7 @@ class MainWindow(Tk):
         subMenu.add_command(label="Settings",
                             command=lambda: self.create_window())
         subMenu.add_command(label="Exit",
-                             command=lambda: self.create_window2())
+                             command=lambda: self.saveSensorList())
 
         # Read the number of files which represent the number odf sensor
         for file in dirs:
@@ -33,6 +38,14 @@ class MainWindow(Tk):
             sensorList.append(Sensor(counter, sensorName, 20.0, -10, 30, deviceFile))
             counter = counter + 1
             print(deviceFile)
+
+        # Read the file if exists
+        exists = os.path.isfile(pathData+'bin.dat')
+        print(str(exists))
+        sensorListImportedFromFile = self.load_data()
+        for i in range(len(sensorListImportedFromFile)):
+            valll=sensorListImportedFromFile[i]
+            print(valll.name)
 
         # Create dynamically the label frames for each sensor
         for i in range(len(sensorList)):
@@ -58,9 +71,18 @@ class MainWindow(Tk):
 
     def saveSensorList(self):
         global sensorList
-        #edfdfsdfasdfsdfsdfdsdfkvp[sda[fpsdfas
-        #dsaasafdsvasdfvdsvsfavffsdfafDADS
+        with open("bin.dat", "wb") as f:
+            pickle.dump(sensorList, f)
 
+    def load_data(self):
+        tempSensorList = []
+        try:
+            with open(pathData+'bin.dat', "rb") as f:
+                tempSensorList = pickle.load(f)
+        except:
+           messagebox.showerror("Error", "problem with reading file")
+
+        return tempSensorList
 
 
 root = MainWindow()
