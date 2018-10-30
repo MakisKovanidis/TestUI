@@ -9,7 +9,7 @@ def read_temp_raw(filePath):
     return lines
 
 
-class Sensor(object ):
+class Sensor(object):
     def __init__(self, id, name, value, lowLimit, upperLimit, filePath="SS"):
         self.id = id
         self.name = name
