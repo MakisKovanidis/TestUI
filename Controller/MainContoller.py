@@ -6,8 +6,8 @@ from Models.Sensor import Sensor
 from Settings import globalSettings
 
 # Open a file
-path = globalSettings.laptopBaseDir
-pathData = globalSettings.laptopDataDir
+path = globalSettings.desktopBaseDir
+pathData = globalSettings.desktopDataDir
 dirs = os.listdir(path)
 counter = 1
 
@@ -74,3 +74,6 @@ class MainController:
             messagebox.showerror("Error", "problem with reading file")
 
         return tempSensorList
+
+    def getSensorList(self):
+        return self.sensorList
