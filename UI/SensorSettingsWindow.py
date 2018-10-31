@@ -7,6 +7,7 @@ class SensorsSettingsWindow(Toplevel):
         self.topWindow = Toplevel()
         self.topWindow.transient()
         self.topWindow.wm_title("hello1")
+        self.topWindow.wm_attributes("-topmost", 1)
         self.listFrame = LabelFrame(self.topWindow, text="Λιστα Αισθητηρων")
         self.sensorList = Listbox(self.listFrame, selectmode=EXTENDED, width=40)
         self.sensorList.pack()
