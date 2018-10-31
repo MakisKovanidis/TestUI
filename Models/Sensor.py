@@ -41,9 +41,3 @@ class Sensor(object):
 
     def getID(self):
         return self.id
-
-    def save(self, name, lowLimit, upperLimit):
-        self.id=id
-        self.name=name
-        self.lowLimit=lowLimit
-        self.upperLimit=upperLimit

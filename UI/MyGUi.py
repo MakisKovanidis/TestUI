@@ -8,13 +8,12 @@ from Models.Sensor import Sensor
 from UI.SensorSettingsWindow import SensorsSettingsWindow
 import _pickle as pickle
 
-
-
 # Open a file
-path = globalSettings.desktopBaseDir
-pathData = globalSettings.desktopDataDir
+path = globalSettings.laptopBaseDir
+pathData = globalSettings.laptopDataDir
 dirs = os.listdir(path)
 counter = 1
+
 
 class MainWindow(Tk):
     def __init__(self, *args, **kwargs):
@@ -30,45 +29,39 @@ class MainWindow(Tk):
         subMenu.add_command(label="Settings",
                             command=lambda: self.create_window())
         subMenu.add_command(label="Exit",
-                             command=lambda: self.saveSensorList())
+                            command=lambda: self.saveSensorList())
 
         # Read the number of files which represent the number odf sensor
-        self.readTheInstalledSensors()
+        self.readAllSensors()
 
-
-
-        # Read the file if exists
-        exists = os.path.isfile(pathData+'bin.dat')
-        print(str(exists))
-        self.sensorListImportedFromFile = self.load_data()
-
-        # Check if the list of imported sensor
-        print(str(len(self.sensorList)))
-        if self.checkEqualsOfListSensors():
-            print("the lists are the same")
-        else:
-            print("isn't same")
-
+        # # Check if the list of imported sensor
+        # print(str(len(self.sensorList)))
+        # if self.checkEqualsOfListSensors():
+        #     print("the lists are the same")
+        # else:
+        #     print("isn't same")
 
         # Create dynamically the label frames for each sensor
         self.createTheLabelFrames()
 
     # Read the number of files which represent the number odf sensor
     def readTheInstalledSensors(self):
+        tempListInstalledSensors = []
         for file in dirs:
             global counter
             sensorName = "Sensor" + str(counter)
             deviceFile = path + file
-            self.sensorList.append(Sensor(counter, sensorName, 20.0, -10, 30, deviceFile))
+            tempListInstalledSensors.append(Sensor(counter, sensorName, 20.0, -10, 30, deviceFile))
             counter = counter + 1
             print(deviceFile)
+
+        return tempListInstalledSensors
 
     def createTheLabelFrames(self, choosedList=0):
         for i in range(len(self.sensorList)):
             labelText = StringVar()
             labelText.set(self.sensorList[i].getName())
             self.labelFrameList.append(MyLabelFrame(self.sensorList[i], self, labelText.get()))
-
 
     # Read the sensor periodically after 10 secs
     def read_sensor(self):
@@ -88,27 +81,56 @@ class MainWindow(Tk):
         with open("bin.dat", "wb") as f:
             pickle.dump(self.sensorList, f)
 
+        exit()
+
     def load_data(self):
         tempSensorList = []
         try:
-            with open(pathData+'bin.dat', "rb") as f:
+            with open(pathData + 'bin.dat', "rb") as f:
                 tempSensorList = pickle.load(f)
         except:
-           messagebox.showerror("Error", "problem with reading file")
+            messagebox.showerror("Error", "problem with reading file")
 
         return tempSensorList
 
-    def checkEqualsOfListSensors(self):
-        isEqual=False
+    def readAllSensors(self):
+        # Read the file if exists previous data
+        exists = os.path.isfile(pathData + 'bin.dat')
+        print(str(exists))
+        if (exists):
+            self.sensorList = self.load_data()
 
-        if (len(self.sensorList)== len(self.sensorListImportedFromFile)):
-            isEqual=True
-            for i in range (len(self.sensorList)):
-                if(self.sensorList[i].name != self.sensorListImportedFromFile[i].name):
-                    isEqual=False
-                    break
+        # Append new Sensors if installed last time
+        newinstalledSensors = self.readTheInstalledSensors()
+        for i in range(len(newinstalledSensors)):
+            tempSensor = newinstalledSensors[i]
+            # print(str(tempSensor.id)+ "#####"+tempSensor.name)
+            if (self.findIfTheSensorExist(tempSensor) == False):
+                self.sensorList.append(tempSensor)
 
-        return isEqual
+        self.sensorList.sort(key=lambda x: str(x.id))
+
+    def findIfTheSensorExist(self, sensorArg):
+        find = False
+        for Sensor in self.sensorList:
+            if (Sensor.id == sensorArg.id):
+                find = True
+                break
+
+        return find
+
+    # def checkEqualsOfListSensors(self):
+    #     isEqual=False
+    #
+    #     if (len(self.sensorList)== len(self.sensorListImportedFromFile)):
+    #         isEqual=True
+    #         for i in range (len(self.sensorList)):
+    #             if(self.sensorList[i].name != self.sensorListImportedFromFile[i].name):
+    #                 isEqual=False
+    #                 break
+    #
+    #     return isEqual
+
 
 root = MainWindow()
 root.state('zoomed')

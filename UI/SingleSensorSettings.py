@@ -53,7 +53,9 @@ class SingleSensorSettings(Toplevel):
 
     def saveChanges(self, sensorArg):
         try:
-            sensorArg.save(self.nameEntry.get(), int(self.lowerLimitEntry.get()), int(self.upperLimitEntry.get()))
+            sensorArg.name=self.nameEntry.get()
+            sensorArg.lowLimit=int(self.lowerLimitEntry.get())
+            sensorArg.upperLimit=int(self.upperLimitEntry.get())
             self.topWindow.destroy()
         except ValueError:
             messagebox.showerror("error","invslid limits")
