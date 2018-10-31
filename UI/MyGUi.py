@@ -34,13 +34,6 @@ class MainWindow(Tk):
         # Read the number of files which represent the number odf sensor
         self.readAllSensors()
 
-        # # Check if the list of imported sensor
-        # print(str(len(self.sensorList)))
-        # if self.checkEqualsOfListSensors():
-        #     print("the lists are the same")
-        # else:
-        #     print("isn't same")
-
         # Create dynamically the label frames for each sensor
         self.createTheLabelFrames()
 
@@ -119,17 +112,6 @@ class MainWindow(Tk):
 
         return find
 
-    # def checkEqualsOfListSensors(self):
-    #     isEqual=False
-    #
-    #     if (len(self.sensorList)== len(self.sensorListImportedFromFile)):
-    #         isEqual=True
-    #         for i in range (len(self.sensorList)):
-    #             if(self.sensorList[i].name != self.sensorListImportedFromFile[i].name):
-    #                 isEqual=False
-    #                 break
-    #
-    #     return isEqual
 
 
 root = MainWindow()
